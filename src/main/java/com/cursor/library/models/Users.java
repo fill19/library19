@@ -11,56 +11,29 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String userName;
+    @Column(name = "id")
+    private Long id;
+
+    private String username;
     private String password;
-    @ElementCollection(targetClass = UserPermission.class, fetch = FetchType.EAGER)
+
+    @ElementCollection(targetClass = UserPermissions.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<UserPermission> permissions;
+    private Set<UserPermissions> permissions;
 
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPermissions(Set<UserPermission> permissions) {
-        this.permissions = permissions;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public Set<UserPermission> getPermissions() {
-        return permissions;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permissions.stream().map(r -> new SimpleGrantedAuthority(r.name())).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
+        return permissions.stream().map(p-> new SimpleGrantedAuthority(p.name())).collect(Collectors.toList());
     }
 
     @Override
