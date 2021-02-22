@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-public class Users implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
