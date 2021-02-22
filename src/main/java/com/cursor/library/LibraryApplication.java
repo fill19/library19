@@ -29,17 +29,16 @@ public class LibraryApplication {
 
 
     @PostConstruct
-    public void addUsers() {
-        User user = User.builder()
-                .username("user")
-                .password(encoder.encode("password"))
+   User user = User.builder()
+                .username("Nazar")
+                .password(encoder.encode("dai"))
                 .permissions(Set.of(UserPermissions.ROLE_READ))
                 .build();
         userRepository.save(user);
 
         User admin = User.builder()
-                .username("admin")
-                .password(encoder.encode("admin"))
+                .username("Chuck")
+                .password(encoder.encode("dope"))
                 .permissions(Set.of(UserPermissions.ROLE_READ, UserPermissions.ROLE_DELETE, UserPermissions.ROLE_ADD))
                 .build();
         userRepository.save(admin);
